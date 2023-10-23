@@ -44,7 +44,7 @@
                     <ul class="dropdown-menu">
                       <li><button class="dropdown-item" ng-click="mudaTipo()">{{!tipo}}</button></li>
                     </ul>
-                    <input type="number" class="form-control shadow" placeholder="Digite um valor em R$" ng-model="registro">
+                    <input type="number" class="form-control shadow" placeholder="Digite um valor em R$" ng-model="valor">
                   </div>
             </div>
         </div>
@@ -52,10 +52,32 @@
         <div class="row bottom-space">
             <div class="col-xs-12">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(registro)" ng-disabled="verificaRegistro(registro)">Adicionar</button>
+                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(valor)" ng-disabled="verificaValor(valor)">Adicionar</button>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped shadow">
+                    <tr class="header-tabela">
+                        <td>Data</td>
+                        <td>Hora</td>
+                        <td>Tipo</td>
+                        <td>Valor</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="registro in registros">
+                        <td>{{registro.data | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{registro.data | date: 'HH:mm'}}</td>
+                        <td>{{registro.tipo}}</td>
+                        <td>{{registro.valor}}</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    
     </div>
 </body>
 </html>

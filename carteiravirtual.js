@@ -13,26 +13,26 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
         $scope.tipo = !$scope.tipo;
     };
 
-    $scope.incrementaTotais = function(registro){
+    $scope.incrementaTotais = function(valor){
         if (!$scope.tipo) {
-            $scope.totais.divida += registro;
+            $scope.totais.divida += valor;
             return;
         }
-        $scope.totais.caixa += registro;
+        $scope.totais.caixa += valor;
     };
 
-    $scope.RegistraTabela = function(registro){
-
+    $scope.RegistraTabela = function(valor, arrayRegistros){
+        arrayRegistros.push({data: new Date(), tipo: $scope.tipo, valor: valor});
     };
 
-    $scope.Adicionar = function(registro){
-        $scope.RegistraTabela(registro);
-        $scope.incrementaTotais(registro);
-        delete $scope.registro
+    $scope.Adicionar = function(valor){
+        $scope.RegistraTabela(valor, $scope.registros);
+        $scope.incrementaTotais(valor);
+        delete $scope.valor
     };
 
-    $scope.verificaRegistro = function(registro) {
-        if (registro > 0){
+    $scope.verificaValor = function(valor) {
+        if (valor > 0){
             return false;
         };
         return true;
