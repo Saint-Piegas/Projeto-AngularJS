@@ -32,3 +32,13 @@ body{
 .shadow {
     box-shadow: 4px 4px 0 rgb(0,0,0,0.2);
 }
+
+.caixa {
+    background-color: green;
+    color: white;
+}
+
+.divida {
+    background-color: red;
+    color: white;
+}

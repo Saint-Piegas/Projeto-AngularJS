@@ -31,7 +31,10 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
         delete $scope.registro
     };
 
-    $scope.verificaRegistro = function(registo) {
-
+    $scope.verificaRegistro = function(registro) {
+        if (registro > 0){
+            return false;
+        };
+        return true;
     };
 });

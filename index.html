@@ -19,7 +19,7 @@
         
         <div class="row bottom-space">
             <div class="col-sm-6">
-                <div class="card mb-3 painel-carteira">
+                <div class="card mb-3 painel-carteira shadow">
                     <div class="card-body">
                       <h3 class="card-title painel-titulo">Caixa</h3>
                       <h3 class="card-text painel-conteudo">{{totais.caixa}}</h3>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-sm-6">
-                <div class="card mb-3 painel-carteira">
+                <div class="card mb-3 painel-carteira shadow">
                     <div class="card-body">
                       <h3 class="card-title painel-titulo">Dívida</h3>
                       <h3 class="card-text painel-conteudo">{{totais.divida}}</h3>
@@ -40,11 +40,11 @@
         <div class="row bottom-space">
             <div class="col-12">
                 <div class="input-group mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">{{tipo}}</button>
+                    <button class="btn btn-secondary dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" ng-class="{'caixa': tipo, 'divida': !tipo}">{{tipo}}</button>
                     <ul class="dropdown-menu">
                       <li><button class="dropdown-item" ng-click="mudaTipo()">{{!tipo}}</button></li>
                     </ul>
-                    <input type="number" class="form-control" placeholder="Digite um valor em R$" ng-model="registro">
+                    <input type="number" class="form-control shadow" placeholder="Digite um valor em R$" ng-model="registro">
                   </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="row bottom-space">
             <div class="col-xs-12">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(registro)" ng-abled="verificaRegistro(registro)">Adicionar</button>
+                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(registro)" ng-disabled="verificaRegistro(registro)">Adicionar</button>
                 </div>
             </div>
         </div>
