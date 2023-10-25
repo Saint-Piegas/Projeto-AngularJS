@@ -53,7 +53,7 @@
         <div class="row bottom-space">
             <div class="col-xs-12">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(valor)" ng-disabled="verificaValor(valor)">Adicionar</button>
+                    <button class="btn btn-success btn-lg shadow" ng-click="Adicionar(valor, tipo, registros)" ng-disabled="verificaValor(valor)">Adicionar</button>
                 </div>
             </div>
         </div>
@@ -73,9 +73,16 @@
                         <td>{{registro.data | date: 'HH:mm'}}</td>
                         <td>{{registro.tipo | caixadivida}}</td>
                         <td>{{registro.valor}}</td>
-                        <td></td>
+                        <td> <input class="form-check-input me-1" type="checkbox" ng-model="registro.selecionado"></td>
                     </tr>
                 </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col=12 d-flex justify-content-end">
+                <button type="button" style="margin-right: 5px" class="btn btn-success shadow" ng-show="verificaEditar(registros)">Editar</button>
+                <button type="button" class="btn btn-danger shadow" ng-show="verificaDeletar(registros)" ng-click="deletaRegistros(registros)">Deletar</button>
             </div>
         </div>
     
