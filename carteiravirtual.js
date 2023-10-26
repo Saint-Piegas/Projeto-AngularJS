@@ -10,7 +10,7 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
     $scope.registros = [];
 
     $scope.mudaTipo = function() {
-        $scope.tipo = !$scope.tipo;
+        $scope.tipo = !$scope.tipo;     
     };
 
     $scope.incrementaTotais = function(valor, tipo){
@@ -21,15 +21,14 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
         $scope.totais.caixa += valor;
     };
 
-    $scope.RegistraTabela = function(valor, tipo, arrayRegistros){
-        arrayRegistros.push({data: new Date(), tipo: tipo, valor: valor});
+    $scope.adicionaRegistro = function(registro) {
+        $scope.registros.push(registro);
+        $scope.registros.sort(function(registro1, registro2){
+            return registro1.data-registro2.data;
+        });
     };
 
-    $scope.Adicionar = function(valor, tipo, registros){
-        $scope.RegistraTabela(valor, tipo, registros);
-        $scope.incrementaTotais(valor, tipo);
-        delete $scope.valor
-    };
+    // Verificadores - Melhorar esse código
 
     $scope.verificaValor = function(valor) {
         if (valor > 0){
@@ -38,7 +37,46 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
         return true;
     };
 
-    $scope.deletaRegistros = function(registros) {
+    $scope.verificaEditar = function(registros) {
+        return registros.filter(function(registro){
+            return registro.selecionado;
+        }).length == 1;
+    };
+
+    $scope.verificaDeletar = function(registros) {
+        return registros.some(function(registro){
+            return registro.selecionado;
+        });
+    };
+
+    $scope.verificaEditor = function(registros){
+        return registros.some(function(registro){
+            return registro.editar;
+        });
+    };
+
+    // Botões - dar uma olhada em boas práticas
+
+    $scope.Adicionar = function(valor, tipo){
+        $scope.adicionaRegistro({data: new Date(), tipo: tipo, valor: valor});
+        $scope.incrementaTotais(valor, tipo);
+        delete $scope.valor
+    };
+
+
+    $scope.Editar = function() {
+        $scope.registros.map(function(registro){
+            if (registro.selecionado){
+                registro.editar = true;
+                return registro;
+            }
+            else {
+                return registro;
+            };
+        });
+    };
+
+    $scope.Deletar = function(registros) {
         let nao_selecionados = [];
         
         for (let registro of registros){
@@ -53,15 +91,25 @@ angular.module('carteiraVirtual').controller('carteiraVirtualCtrl', function($sc
         $scope.registros = nao_selecionados;
     };
 
-    $scope.verificaEditar = function(registros) {
-        return registros.filter(function(registro){
-            return registro.selecionado;
-        }).length == 1;
+    $scope.Cancelar = function(){
+        $scope.registros.map(function(registro){
+            if (registro.editar){
+                registro.editar = false;
+                return registro;
+            }
+            else {
+                return registro;
+            };
+        });
+        $scope.novo_registro = {};
     };
 
-    $scope.verificaDeletar = function(registros) {
-        return registros.some(function(registro){
-            return registro.selecionado;
+    $scope.Confirmar = function(novo_registro) {
+        $scope.adicionaRegistro(novo_registro);
+        $scope.registros = $scope.registros.filter(function(registro){
+            return !registro.editar
         });
+        
+        $scope.novo_registro = {}
     };
 });

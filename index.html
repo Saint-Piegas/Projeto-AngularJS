@@ -69,20 +69,52 @@
                         <td></td>
                     </tr>
                     <tr ng-repeat="registro in registros">
-                        <td>{{registro.data | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{registro.data | date: 'HH:mm'}}</td>
-                        <td>{{registro.tipo | caixadivida}}</td>
-                        <td>{{registro.valor}}</td>
-                        <td> <input class="form-check-input me-1" type="checkbox" ng-model="registro.selecionado"></td>
+                        <div ng-init="novo_registro = {}">
+                            <td>
+                                <span ng-if="!registro.editar">{{registro.data | date: 'dd/MM/yyyy'}}</span>
+                                <span ng-if="registro.editar">
+                                    <input class="form-control" type="date" ng-model="novo_registro.data">
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-if="!registro.editar">{{registro.data | date: 'HH:mm'}}</span>
+                                <span ng-if="registro.editar">
+                                    <input class="form-control" type="time" ng-model="novo_registro.data">
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-if="!registro.editar">{{registro.tipo | caixadivida}}</span>
+                                <span ng-if="registro.editar">
+                                    <select class="form-select" ng-model="novo_registro.tipo">
+                                        <option>{{registro.tipo | caixadivida}}</option>
+                                        <option>{{!registro.tipo | caixadivida}}</option>
+                                      </select>
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-if="!registro.editar">{{registro.valor}}</span>
+                                <span ng-if="registro.editar">
+                                    <input class="form-control" tupe="number" placeholder="Digite um valor em R$" ng-model="novo_registro.valor">
+                                </span>
+                            </td>
+                            <td> <input class="form-check-input me-1" type="checkbox" ng-model="registro.selecionado" ng-disabled="verificaEditor(registros)"></td>
+                            {{registros}}
+                            {{novo_registro}}
+                        </div>
                     </tr>
                 </table>
             </div>
         </div>
-
         <div class="row">
             <div class="col=12 d-flex justify-content-end">
-                <button type="button" style="margin-right: 5px" class="btn btn-success shadow" ng-show="verificaEditar(registros)">Editar</button>
-                <button type="button" class="btn btn-danger shadow" ng-show="verificaDeletar(registros)" ng-click="deletaRegistros(registros)">Deletar</button>
+                <span ng-if="!verificaEditor(registros)">
+                    <button type="button" style="margin-right: 5px" class="btn btn-info shadow" ng-show="verificaEditar(registros)" ng-click="Editar()">Editar</button>
+                    <button type="button" class="btn btn-danger shadow" ng-show="verificaDeletar(registros)" ng-click="Deletar(registros)">Deletar</button>
+                </span>
+                <span ng-if="verificaEditor(registros)">
+                    <button type="button" style="margin-right: 5px" class="btn btn-success shadow" ng-click="Confirmar(novo_registro)">Confirmar</button>
+                    <button type="button" class="btn btn-danger shadow" ng-click="Cancelar()">Cancelar</button>
+                </span>
             </div>
         </div>
     
